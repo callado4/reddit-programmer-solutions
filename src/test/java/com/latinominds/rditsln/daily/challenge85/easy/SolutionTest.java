@@ -17,11 +17,25 @@ public class SolutionTest {
 	@Test
 	public void testSimpleMatrix() throws IOException {
 		InputStream input = getClass().getResourceAsStream("simple-input.txt");
-		
-		String answerStr = solution.sumAndSortMatrix(input);
-		assertNotNull(answerStr);
-		
 		InputStream expectedAnswer = getClass().getResourceAsStream("simple-answer.txt");
+		
+		checkIfOutputCorrect(input, expectedAnswer);
+	}
+
+	@Test
+	public void testLargeMatrix() throws IOException {
+		InputStream input = getClass().getResourceAsStream("large-input.txt");
+		InputStream expectedAnswer = getClass().getResourceAsStream("large-answer.txt");
+
+		checkIfOutputCorrect(input, expectedAnswer);
+	}
+
+	private void checkIfOutputCorrect(InputStream input, InputStream expectedAnswer) throws IOException {
+		String answerStr = solution.sumAndSortMatrix(input);
+		System.out.println("======== answerStr ===============");
+		System.out.println(answerStr);
+		System.out.println("======== answerStr ===============");
+		assertNotNull(answerStr);
 
 		String[] answerArray = answerStr.split("\n");
 		List<String> expAnsList = IOUtils.readLines(expectedAnswer);
@@ -29,7 +43,7 @@ public class SolutionTest {
 		assertEquals(expAnsList.size(), answerArray.length);
 		int i = 0;
 		for (String expectedLine : expAnsList) {
-			assertEquals(expectedLine, answerArray[i++]);
+			assertEquals(expectedLine.trim(), answerArray[i++].trim());
 		}
 	}
 }
